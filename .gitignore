@@ -1,0 +1,58 @@
+# IntelliJ IDEA и Android Studio
+*.iml
+.idea/
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# Mac OS системные файлы
+.DS_Store
+
+# Артефакты сборки Android
+/build
+**/build/
+
+# Локальные настройки Gradle
+.gradle
+gradle-app.setting
+gradletasknamecache
+local.properties
+
+# Внешние сборки
+.externalNativeBuild
+.cxx
+captures
+
+# Исключение артефактов Kotlin и Java
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Логи сбоев JVM
+hs_err_pid*
+replay_pid*
+
+# Исключение файлов Eclipse (если они есть)
+.project
+.classpath
+.mtj.tmp/
+
+# Gradle Wrapper
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# Исключение папки app/build
+app/build/
+
+# Исключение временных скриптов и файлов
+app/src/main/java/com/example/zitadelapp/all_files.sh
+app/src/main/java/com/example/zitadelapp/all_files.txt
