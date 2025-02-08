@@ -1,0 +1,33 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.zitadelapp">
+
+    <!-- Разрешение для доступа в Интернет -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:label="Zitadel Demo"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <!-- Главный запуск приложения -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Intent filter для обработки редиректа по custom URI -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Регистрируем схему и host: com.example.zitadelapp://oauth2redirect -->
+                <data
+                    android:host="oauth2redirect"
+                    android:scheme="com.example.zitadelapp" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
