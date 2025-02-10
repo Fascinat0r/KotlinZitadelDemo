@@ -1,9 +1,10 @@
 package com.example.zitadelapp.auth
 
-import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
+import com.example.zitadelapp.util.Config
 import com.example.zitadelapp.util.PKCEUtil
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
@@ -13,30 +14,23 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ResponseTypeValues
 
-class OAuthManager(private val authService: AuthorizationService) {
+class OAuthManager(val authService: AuthorizationService) {
 
-    companion object {
-        const val RC_AUTH = 100
-    }
-
-    private var authState: AuthState? = null
-    private var codeVerifier: String? = null
+    var authState: AuthState? = null
+    var codeVerifier: String? = null
 
     /**
-     * Запускает процесс авторизации с поддержкой PKCE через AppAuth и Custom Tabs.
+     * Создает Intent для запуска авторизации.
      */
-    fun startAuthentication(activity: Activity) {
-        Log.d("OAuthManager", "Начало аутентификации")
-
-        val authEndpoint = Uri.parse("https://iam.remystorage.ru/oauth/v2/authorize")
-        val tokenEndpoint = Uri.parse("https://iam.remystorage.ru/oauth/v2/token")
+    fun createAuthIntent(): Intent {
+        Log.d("OAuthManager", "Starting authentication")
+        val authEndpoint = Uri.parse(Config.AUTH_ENDPOINT)
+        val tokenEndpoint = Uri.parse(Config.TOKEN_ENDPOINT)
         val serviceConfig = AuthorizationServiceConfiguration(authEndpoint, tokenEndpoint)
+        val clientId = Config.CLIENT_ID
+        val redirectUri = Uri.parse(Config.REDIRECT_URI)
+        val scope = Config.SCOPE
 
-        val clientId = "303649605919244516"
-        val redirectUri = Uri.parse("com.example.zitadelapp://oauth2redirect")
-        val scope = "openid profile email"
-
-        // Генерация PKCE-параметров
         codeVerifier = PKCEUtil.generateCodeVerifier()
         val codeChallenge = PKCEUtil.generateCodeChallenge(codeVerifier!!)
         Log.d("OAuthManager", "codeVerifier: $codeVerifier")
@@ -52,19 +46,14 @@ class OAuthManager(private val authService: AuthorizationService) {
             .setCodeVerifier(codeVerifier, codeChallenge, "S256")
             .build()
 
-        // Используем CustomTabsIntent из androidx.browser.customtabs
         val customTabsIntent = CustomTabsIntent.Builder().build()
-        val authIntent = authService.getAuthorizationRequestIntent(authRequest, customTabsIntent)
-        activity.startActivityForResult(authIntent, RC_AUTH)
+        return authService.getAuthorizationRequestIntent(authRequest, customTabsIntent)
     }
 
     /**
      * Обрабатывает ответ авторизации и выполняет обмен кода на токен.
      */
-    fun handleAuthorizationResponse(
-        data: android.content.Intent,
-        onTokenReceived: (String) -> Unit
-    ) {
+    fun handleAuthorizationResponse(data: Intent, onTokenReceived: (String) -> Unit) {
         val response = AuthorizationResponse.fromIntent(data)
         val ex = AuthorizationException.fromIntent(data)
         if (response != null) {
@@ -77,19 +66,19 @@ class OAuthManager(private val authService: AuthorizationService) {
                     authState?.update(tokenResponse, exception)
                     val accessToken = tokenResponse.accessToken
                     if (accessToken != null) {
-                        Log.d("OAuthManager", "Access token получен: $accessToken")
+                        Log.d("OAuthManager", "Access token received: $accessToken")
                         onTokenReceived(accessToken)
                     } else {
-                        Log.e("OAuthManager", "Access token отсутствует")
+                        Log.e("OAuthManager", "Access token is missing")
                     }
                 } else {
-                    Log.e("OAuthManager", "Ошибка token exchange: ${exception?.errorDescription}")
+                    Log.e("OAuthManager", "Token exchange error: ${exception?.errorDescription}")
                 }
             }
         } else {
             Log.e(
                 "OAuthManager",
-                "Ошибка авторизации: ${ex?.errorDescription ?: "Response is null"}"
+                "Authorization error: ${ex?.errorDescription ?: "Response is null"}"
             )
         }
     }

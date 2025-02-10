@@ -13,10 +13,10 @@ class AuthViewModel : ViewModel() {
     private val repository = AuthRepository()
 
     private val _userInfo = MutableLiveData<UserInfo>()
-    val userInfo: LiveData<UserInfo> = _userInfo
+    val userInfo: LiveData<UserInfo> get() = _userInfo
 
     private val _error = MutableLiveData<String>()
-    val error: LiveData<String> = _error
+    val error: LiveData<String> get() = _error
 
     fun fetchUserInfo(accessToken: String) {
         viewModelScope.launch {
