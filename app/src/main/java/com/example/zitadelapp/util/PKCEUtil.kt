@@ -1,4 +1,4 @@
-package com.example.zitadelapp
+package com.example.zitadelapp.util
 
 import android.util.Base64
 import java.security.MessageDigest

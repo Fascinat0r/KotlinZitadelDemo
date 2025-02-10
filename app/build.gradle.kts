@@ -42,18 +42,16 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    // Ktor – клиент на базе OkHttp для работы с сетью
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
+    // Retrofit и конвертер Gson для сетевых запросов
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
-    // kotlinx-serialization для работы с JSON
-    implementation(libs.kotlinx.serialization.json)
-
-    // AppAuth для Android и Custom Tabs для авторизации
+    // AppAuth и Custom Tabs для авторизации
     implementation(libs.appauth)
     implementation(libs.androidx.browser)
+
+    // ViewModel KTX для viewModelScope и ViewModelProvider
+    implementation(libs.lifecycle.viewmodel.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

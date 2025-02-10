@@ -9,7 +9,7 @@
         android:label="Zitadel Demo"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <!-- Главный запуск приложения -->
             <intent-filter>
