@@ -23,7 +23,7 @@ token и последующего запроса данных пользоват
 - **Использование Custom Tabs:** Открытие внешнего браузера через Custom Tabs для безопасного
   проведения аутентификации.
 - **Обмен токена:** Обработка обмена authorization code на access token с помощью AppAuth.
-- **Запрос userinfo:** Получение и отображение данных пользователя с использованием Ktor.
+- **Запрос userinfo:** Получение и отображение данных пользователя с использованием Retrofit.
 - **Подробное логирование:** На каждом этапе аутентификации ведется логирование для отладки.
 
 ### Технологии:
@@ -31,7 +31,7 @@ token и последующего запроса данных пользоват
 - Kotlin
 - AppAuth for Android
 - Custom Tabs (androidx.browser)
-- Ktor (для сетевых запросов)
+- Retrofit (для сетевых запросов)
 - kotlinx.serialization
 
 ### Предварительные требования:
@@ -108,7 +108,7 @@ URL: [https://github.com/Fascinat0r/KotlinZitadelDemo](https://github.com/Fascin
   authentication.
 - **Token Exchange:** Handles the exchange of the authorization code for an access token using
   AppAuth.
-- **Userinfo Request:** Retrieves and displays user data using Ktor.
+- **Userinfo Request:** Retrieves and displays user data using Retrofit.
 - **Detailed Logging:** Logs every step of the authentication process for debugging purposes.
 
 ### Technologies:
@@ -116,7 +116,7 @@ URL: [https://github.com/Fascinat0r/KotlinZitadelDemo](https://github.com/Fascin
 - Kotlin
 - AppAuth for Android
 - Custom Tabs (androidx.browser)
-- Ktor (for network requests)
+- Retrofit (for network requests)
 - kotlinx.serialization
 
 ### Prerequisites:
